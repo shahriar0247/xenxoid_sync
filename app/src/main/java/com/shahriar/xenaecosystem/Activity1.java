@@ -17,6 +17,7 @@ import android.content.Context;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
 
@@ -32,6 +33,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -74,6 +76,7 @@ public class Activity1 extends AppCompatActivity {
     String local_location = "";
     List<folder> all_folders;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,7 @@ public class Activity1 extends AppCompatActivity {
         main(current_location);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     void main(String location){
         LinearLayout main_layout = getmainlayout();
         List<String> all_files = ls(new File(location));
@@ -114,13 +118,23 @@ public class Activity1 extends AppCompatActivity {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     ArrayList<folder> create_folders(List<String> files, final LinearLayout main_layout){
 
 
         main_layout.removeAllViews();
 
         final ArrayList<folder> all_folders = new ArrayList<folder>();
-        for (String filename: files){
+        if (files.size() == 0){
+
+           TextView no_file_error = new TextView(this);
+           no_file_error.setText("No files in this folder");
+           no_file_error.setTextColor(Color.parseColor("#dddddd"));
+           main_layout.addView(no_file_error);
+
+        }
+        else{
+        for (String filename: files) {
 
             final String finalFilename = filename;
             // setting main layout
@@ -146,8 +160,7 @@ public class Activity1 extends AppCompatActivity {
 
                     if (local_location != "") {
                         local_location = local_location + "/" + finalFilename;
-                    }
-                    else{
+                    } else {
                         local_location = finalFilename;
                     }
                     main(current_location + "/" + local_location);
@@ -155,19 +168,20 @@ public class Activity1 extends AppCompatActivity {
             });
             ConstraintLayout.LayoutParams layout2_params = new ConstraintLayout.LayoutParams(
                     400,
-                    100
+                    120
             );
             layout2.setLayoutParams(layout2_params);
             layout1.addView(layout2);
 
             // setting upload_check
             final CheckBox upload_check = new CheckBox(this);
+            upload_check.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#ffffff")));
             if (local_location == "") {
-                if (files_to_sync.contains(finalFilename)){
+                if (files_to_sync.contains(finalFilename)) {
                     upload_check.setChecked(true);
                 }
             } else {
-                if (files_to_sync.contains(local_location + "/" + finalFilename)){
+                if (files_to_sync.contains(local_location + "/" + finalFilename)) {
                     upload_check.setChecked(true);
                 }
             }
@@ -183,8 +197,7 @@ public class Activity1 extends AppCompatActivity {
                         for (String one_file : files_to_sync) {
                             Log.d("file to sync", one_file);
                         }
-                    }
-                    else{
+                    } else {
                         if (local_location == "") {
                             files_to_sync.remove(finalFilename);
                         } else {
@@ -200,43 +213,70 @@ public class Activity1 extends AppCompatActivity {
             TextView sync = new TextView(this);
             sync.setText("Sync");
             sync.setId(View.generateViewId());
+            sync.setTextColor(Color.rgb(200, 200, 200));
             layout1.addView(sync);
+
+            ImageView icon = new ImageView(this);
+            icon.setImageDrawable(getResources().getDrawable(R.drawable.folder));
+            icon.setId(View.generateViewId());
+
+            ConstraintLayout.LayoutParams icon_params = new ConstraintLayout.LayoutParams(
+                    80,
+                    80
+            );
+
+            icon.setLayoutParams(icon_params);
+
+            /*icon.setImageDrawable(getDrawable(R.drawable.file));*/
+            layout1.addView(icon);
+
 
             // setting layout 1 constrains
             ConstraintSet layout1set = new ConstraintSet();
             layout1set.clone(layout1);
+
+            // left part
+
             layout1set.connect(layout2.getId(), ConstraintSet.BOTTOM, layout1.getId(), ConstraintSet.BOTTOM, 32);
             layout1set.connect(upload_check.getId(), ConstraintSet.RIGHT, layout1.getId(), ConstraintSet.RIGHT, 32);
+
             layout1set.connect(sync.getId(), ConstraintSet.TOP, layout1.getId(), ConstraintSet.TOP, 15);
             layout1set.connect(sync.getId(), ConstraintSet.RIGHT, upload_check.getId(), ConstraintSet.LEFT, 16);
+
+
+            layout1set.connect(icon.getId(), ConstraintSet.LEFT, layout1.getId(), ConstraintSet.LEFT, 16);
+
+
+            layout1set.connect(icon.getId(), ConstraintSet.TOP, layout2.getId(), ConstraintSet.TOP, 0);
+            layout1set.connect(icon.getId(), ConstraintSet.BOTTOM, layout2.getId(), ConstraintSet.BOTTOM, 0);
+
+            layout1set.connect(layout2.getId(), ConstraintSet.LEFT, icon.getId(), ConstraintSet.RIGHT, 32);
+
+
             layout1set.applyTo(layout1);
 
 
-
-
-
+            // setting file title
             TextView file_title = new TextView(this);
             file_title.setText(filename);
-            file_title.setTextColor(Color.rgb(22,22,22));
+            file_title.setTextColor(Color.parseColor("#ffffff"));
             file_title.setId(View.generateViewId());
             layout2.addView(file_title);
-
 
 
             ConstraintSet cs = new ConstraintSet();
             cs.clone(layout2);
 
-            cs.connect(file_title.getId(), ConstraintSet.TOP, layout2.getId(), ConstraintSet.TOP,8);
-            cs.connect(file_title.getId(), ConstraintSet.BOTTOM, layout2.getId(), ConstraintSet.BOTTOM,8);
+            cs.connect(file_title.getId(), ConstraintSet.TOP, layout2.getId(), ConstraintSet.TOP, 8);
+            cs.connect(file_title.getId(), ConstraintSet.BOTTOM, layout2.getId(), ConstraintSet.BOTTOM, 8);
             cs.connect(file_title.getId(), ConstraintSet.LEFT, layout2.getId(), ConstraintSet.LEFT, 32);
-            cs.connect(file_title.getId(), ConstraintSet.RIGHT, layout2.getId(), ConstraintSet.RIGHT, 32);
             cs.applyTo(layout2);
 
 
             main_layout.addView(layout1);
             filename = local_location + "/" + filename;
             all_folders.add(new folder(filename, upload_check));
-
+        }
         }
         return  all_folders;
     }
