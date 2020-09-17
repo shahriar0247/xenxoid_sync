@@ -58,15 +58,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 
 public class Activity1 extends AppCompatActivity {
 
-
-    private String current_location = "null";
+    
     public List<String> files_to_sync = null;
+    String current_location = Environment.getExternalStorageDirectory().toString();
+    String local_location = "";
+    List<folder> all_folders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +80,23 @@ public class Activity1 extends AppCompatActivity {
         connect thread = new connect();
         thread.start();
 
-        LinearLayout main_layout = getmainlayout();
-        List<String> all_files = ls(Environment.getExternalStorageDirectory());
-        List<folder> all_folders = create_folders(all_files, main_layout);
-        //files_to_sync = get_files_to_sync(all_folders);
+        main(current_location);
 
-        Runnable r = new getting_files_to_sync_runnable(all_folders);
+        Runnable r = new getting_files_to_sync_runnable();
         new Thread(r).start();
 
+
     }
+
+    void main(String location){
+        LinearLayout main_layout = getmainlayout();
+        List<String> all_files = ls(new File(location));
+       all_folders = create_folders(all_files, main_layout);
+
+
+    }
+
+
 
     List<String> ls(File directory) {
         Log.d("filesofdir", "Directory: " + directory.getAbsolutePath() + "\n");
@@ -106,9 +118,9 @@ public class Activity1 extends AppCompatActivity {
         return null;
     }
 
-    ArrayList<folder> create_folders(List<String> files, LinearLayout main_layout){
-
-        ArrayList<folder> all_folders = new ArrayList<folder>();
+    ArrayList<folder> create_folders(List<String> files, final LinearLayout main_layout){
+        main_layout.removeAllViews();
+        final ArrayList<folder> all_folders = new ArrayList<folder>();
         for (String filename: files){
 
 
@@ -128,6 +140,22 @@ public class Activity1 extends AppCompatActivity {
             ConstraintLayout layout2 = new ConstraintLayout(this);
             layout2.setBackground(ContextCompat.getDrawable(this, R.drawable.folder_back));
             layout2.setId(View.generateViewId());
+            final String finalFilename = filename;
+            layout2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (local_location != "") {
+                        local_location = local_location + "/" + finalFilename;
+                    }
+                    else{
+                        local_location = finalFilename;
+                    }
+                    main(current_location + "/" + local_location);
+                    Runnable r = new getting_files_to_sync_runnable();
+                    new Thread(r).start();
+                }
+            });
             ConstraintLayout.LayoutParams layout2_params = new ConstraintLayout.LayoutParams(
                    400,
                   100
@@ -178,6 +206,7 @@ public class Activity1 extends AppCompatActivity {
 
 
             main_layout.addView(layout1);
+            filename = local_location + "/" + filename;
             all_folders.add(new folder(filename, upload_check));
 
         }
@@ -194,7 +223,27 @@ public class Activity1 extends AppCompatActivity {
 
 
         }
+        for (String file: files_to_sync) {
+            Log.d("files_to_sync", file);
+        }
         return files_to_sync;
+    }
+
+    void back_button(){
+        List<String> local_loc_list =  new LinkedList<String>(Arrays.asList(local_location.split("/")));
+        local_loc_list.remove(local_loc_list.get(local_loc_list.size() - 1));
+        String temp_loc = "";
+        for (String loc: local_loc_list){
+            if (temp_loc == ""){
+                temp_loc = loc;
+            }
+            else{
+            temp_loc = temp_loc + "/" +loc;
+        }
+        }
+        local_location = temp_loc;
+        main(current_location + "/" + local_location);
+
     }
 
     LinearLayout getmainlayout(){
@@ -212,13 +261,6 @@ public class Activity1 extends AppCompatActivity {
 
     public class getting_files_to_sync_runnable implements Runnable {
 
-        public List<folder> all_folders;
-
-        public getting_files_to_sync_runnable(List<folder> local_all_folders) {
-            all_folders = local_all_folders;
-            // store parameter for later user
-        }
-
         public void run() {
             while (true) {
                 files_to_sync = get_files_to_sync(all_folders);
@@ -227,9 +269,6 @@ public class Activity1 extends AppCompatActivity {
     }
 
     class connect extends Thread {
-
-        String currentpath = Environment.getExternalStorageDirectory().toString();
-
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
@@ -302,7 +341,7 @@ public class Activity1 extends AppCompatActivity {
         void download2(Socket server, String requested_file) {
             String output = "null";
 
-            String file_to_download_loc = currentpath + "/" + requested_file;
+            String file_to_download_loc = current_location + "/" + requested_file;
             File file = new File(file_to_download_loc);
 
 
@@ -341,15 +380,14 @@ public class Activity1 extends AppCompatActivity {
                 String server_send = recv(server);
 
                 if (server_send.startsWith("send")) {
-                    send(server,"ok");
+                    send(server, "ok");
                     byte[] image_array = Files.readAllBytes(Paths.get(file_to_download));
                     DataOutputStream dos = new DataOutputStream(server.getOutputStream());
 
                     dos.writeInt(image_array.length);
                     dos.write(image_array);
-                }
-                else if(server_send.startsWith("dont")){
-                    send(server,"ok");
+                } else if (server_send.startsWith("dont")) {
+                    send(server, "ok");
                 }
             } catch (Exception e) {
                 e.getStackTrace();
@@ -378,143 +416,13 @@ public class Activity1 extends AppCompatActivity {
         }
 
         String cd(Socket server, String cmd) {
-            send(server, "currentpath: " + currentpath);
+            send(server, "current_location: " + current_location);
             String output = recv(server);
-            currentpath = output.split("newpath:")[1];
-            return "current path set to:" + currentpath;
+            current_location = output.split("newpath:")[1];
+            return "current path set to:" + current_location;
         }
-
-        String list_all_apps() {
-            try {
-                final PackageManager pm = getPackageManager();
-
-                List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-                String all_apps = null;
-
-
-                for (ApplicationInfo packageInfo : packages) {
-                    ApplicationInfo appinfo = pm.getApplicationInfo(packageInfo.packageName, 0);
-                    all_apps = all_apps + "\n" + appinfo.loadLabel(pm);
-                }
-                return all_apps;
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            return "failed to load apps";
-        }
-
-        String shell(String cmd) {
-
-            Process process = null;
-            try {
-                process = Runtime.getRuntime().exec(cmd);
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                int read;
-                char[] buffer = new char[4096];
-                StringBuffer output = new StringBuffer();
-                while ((read = bufferedReader.read(buffer)) > 0) {
-                    output.append(buffer, 0, read);
-                }
-                bufferedReader.close();
-
-                BufferedReader bufferedReader2 = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                int read2;
-                char[] buffer2 = new char[4096];
-                StringBuffer output2 = new StringBuffer();
-                while ((read2 = bufferedReader2.read(buffer2)) > 0) {
-                    output2.append(buffer2, 0, read2);
-                }
-                bufferedReader2.close();
-                // Waits for the command to finish.
-                process.waitFor();
-                String output3 = output.toString() + output2.toString();
-                Log.d("shell_command ", output3);
-
-                return output3;
-
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            return "error";
-        }
-
-
-
-
-        String loc_call(String action){
-            if (action.contains("scan")) {
-                if ((ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-                    Runnable r = new Runnable() {
-                        public void run() {
-                            scan_loc();
-                        }
-                    };
-
-                    Activity1.this.runOnUiThread(r);
-                    return "Scanning";
-                } else {
-                    return "Permission denied";
-                }
-            }
-            else if (action.contains("stop")){
-
-                Runnable r = new Runnable() {
-                    public void run() {
-                        stop_loc();
-                    }
-                };
-
-                Activity1.this.runOnUiThread(r);
-            }
-            return "Stopped";
-        }
-
-        String getlocation2(){
-            return current_location;
-        }
-
     }
-    LocationManager locationManager;
-        @SuppressLint("MissingPermission")
-        void scan_loc() {
-
-
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,loc_listen);
-
-
-
-
-        }
-
-        void stop_loc(){
-            locationManager.removeUpdates(loc_listen);
-        }
-    LocationListener loc_listen=new LocationListener() {
-
-        @Override
-        public void onLocationChanged(Location location) {
-            current_location = "Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude();
-
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-    };
+        
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -558,5 +466,9 @@ public class Activity1 extends AppCompatActivity {
         return output;
     }
 
+    @Override
+    public void onBackPressed() {
+        back_button();
+    }
 }
 

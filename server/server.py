@@ -89,14 +89,27 @@ def downloadfile(all_files, client):
         while len(buf) < 4:
             buf += client.recv(4 - len(buf))
         size = struct.unpack('!i', buf)[0]
+        if "/" in filename:
+            temp_filename_list = filename.split("/")
+            temp_filename_list = temp_filename_list[:-1]
+    
+            temp_current_loc = ""
+            for temp_filename in temp_filename_list:
+               
+                if (temp_current_loc == ""):
+                    temp_current_loc = temp_filename
+                else:
+                    temp_current_loc = temp_current_loc + "/" + temp_filename
+                try:
+                    os.mkdir(temp_current_loc)
+                except:
+                    pass
         with open(filename, 'wb') as f:
             while size > 0:
                 data = client.recv(1024)
                 f.write(data)
                 size -= len(data)
-        print('Image Saved')
- 
-
+      
 def listall(list_path):
     all_folders = []
     all_files = []
