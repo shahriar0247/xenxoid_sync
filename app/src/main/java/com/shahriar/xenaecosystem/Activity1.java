@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -59,6 +60,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -66,8 +68,8 @@ import java.util.concurrent.Executor;
 
 public class Activity1 extends AppCompatActivity {
 
-    
-    public List<String> files_to_sync = null;
+
+    public List<String> files_to_sync = new ArrayList<>();
     String current_location = Environment.getExternalStorageDirectory().toString();
     String local_location = "";
     List<folder> all_folders;
@@ -81,17 +83,12 @@ public class Activity1 extends AppCompatActivity {
         thread.start();
 
         main(current_location);
-
-        Runnable r = new getting_files_to_sync_runnable();
-        new Thread(r).start();
-
-
     }
 
     void main(String location){
         LinearLayout main_layout = getmainlayout();
         List<String> all_files = ls(new File(location));
-       all_folders = create_folders(all_files, main_layout);
+        all_folders = create_folders(all_files, main_layout);
 
 
     }
@@ -99,7 +96,6 @@ public class Activity1 extends AppCompatActivity {
 
 
     List<String> ls(File directory) {
-        Log.d("filesofdir", "Directory: " + directory.getAbsolutePath() + "\n");
 
         final File[] files = directory.listFiles();
         List<String> files2 = new ArrayList<String>();
@@ -107,7 +103,7 @@ public class Activity1 extends AppCompatActivity {
         if (files != null) {
             for (File file : files) {
                 if (file != null) {
-                    Log.d("filesofdir", file.getName() + "\n");
+
                     files2.add(file.getName());
                 }
             }
@@ -119,11 +115,14 @@ public class Activity1 extends AppCompatActivity {
     }
 
     ArrayList<folder> create_folders(List<String> files, final LinearLayout main_layout){
+
+
         main_layout.removeAllViews();
+
         final ArrayList<folder> all_folders = new ArrayList<folder>();
         for (String filename: files){
 
-
+            final String finalFilename = filename;
             // setting main layout
             FrameLayout.LayoutParams main_layout_params = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
@@ -140,7 +139,7 @@ public class Activity1 extends AppCompatActivity {
             ConstraintLayout layout2 = new ConstraintLayout(this);
             layout2.setBackground(ContextCompat.getDrawable(this, R.drawable.folder_back));
             layout2.setId(View.generateViewId());
-            final String finalFilename = filename;
+
             layout2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -152,19 +151,48 @@ public class Activity1 extends AppCompatActivity {
                         local_location = finalFilename;
                     }
                     main(current_location + "/" + local_location);
-                    Runnable r = new getting_files_to_sync_runnable();
-                    new Thread(r).start();
                 }
             });
             ConstraintLayout.LayoutParams layout2_params = new ConstraintLayout.LayoutParams(
-                   400,
-                  100
+                    400,
+                    100
             );
             layout2.setLayoutParams(layout2_params);
             layout1.addView(layout2);
 
             // setting upload_check
-            CheckBox upload_check = new CheckBox(this);
+            final CheckBox upload_check = new CheckBox(this);
+            if (local_location == "") {
+                if (files_to_sync.contains(finalFilename)){
+                    upload_check.setChecked(true);
+                }
+            } else {
+                if (files_to_sync.contains(local_location + "/" + finalFilename)){
+                    upload_check.setChecked(true);
+                }
+            }
+            upload_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b == true) {
+                        if (local_location == "") {
+                            files_to_sync.add(finalFilename);
+                        } else {
+                            files_to_sync.add(local_location + "/" + finalFilename);
+                        }
+                        for (String one_file : files_to_sync) {
+                            Log.d("file to sync", one_file);
+                        }
+                    }
+                    else{
+                        if (local_location == "") {
+                            files_to_sync.remove(finalFilename);
+                        } else {
+                            files_to_sync.remove(local_location + "/" + finalFilename);
+                        }
+                    }
+                }
+            });
             upload_check.setId(View.generateViewId());
             layout1.addView(upload_check);
 
@@ -213,21 +241,6 @@ public class Activity1 extends AppCompatActivity {
         return  all_folders;
     }
 
-    List<String> get_files_to_sync(List<folder> all_folders){
-        ArrayList<String> files_to_sync = new ArrayList<String>();
-        for (folder one_folder: all_folders){
-
-                if (one_folder.upload_check.isChecked()) {
-                    files_to_sync.add(one_folder.filename);
-                }
-
-
-        }
-        for (String file: files_to_sync) {
-            Log.d("files_to_sync", file);
-        }
-        return files_to_sync;
-    }
 
     void back_button(){
         List<String> local_loc_list =  new LinkedList<String>(Arrays.asList(local_location.split("/")));
@@ -238,8 +251,8 @@ public class Activity1 extends AppCompatActivity {
                 temp_loc = loc;
             }
             else{
-            temp_loc = temp_loc + "/" +loc;
-        }
+                temp_loc = temp_loc + "/" +loc;
+            }
         }
         local_location = temp_loc;
         main(current_location + "/" + local_location);
@@ -259,16 +272,9 @@ public class Activity1 extends AppCompatActivity {
         }
     }
 
-    public class getting_files_to_sync_runnable implements Runnable {
-
-        public void run() {
-            while (true) {
-                files_to_sync = get_files_to_sync(all_folders);
-            }
-        }
-    }
 
     class connect extends Thread {
+
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
@@ -279,10 +285,25 @@ public class Activity1 extends AppCompatActivity {
             String output;
             while (true) {
                 if (files_to_sync != null) {
-                    for (String file_to_sync : files_to_sync) {
-                        download2(server, file_to_sync);
-                    }
+                       sync_once(server);
                 }
+            }
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        void sync_once(Socket server){
+            try {
+                for (String file_to_sync : files_to_sync) {
+                    download2(server, file_to_sync);
+                }
+            }
+            catch (ConcurrentModificationException e){
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                sync_once(server);
             }
         }
 
@@ -304,15 +325,15 @@ public class Activity1 extends AppCompatActivity {
 
         void send(Socket sock, String text) {
             String text_size = (String.valueOf(text.length()));
-            Log.d("text size", text_size);
+
             try {
                 PrintWriter outs = new PrintWriter(sock.getOutputStream(), true);
                 outs.println("buffer: " + text_size);
+                recv(sock);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            Log.d("recv", recv(sock));
             try {
                 PrintWriter outs = new PrintWriter(sock.getOutputStream(), true);
 
@@ -349,9 +370,9 @@ public class Activity1 extends AppCompatActivity {
 
                 List<String> all_files = getallfiles(file);
                 send(server, "dir");
-
+                recv(server);
                 send(server, requested_file);
-
+                recv(server);
                 send(server, "number_of_files: " + all_files.size());
 
                 for (String file1 : all_files) {
@@ -361,6 +382,7 @@ public class Activity1 extends AppCompatActivity {
                 }
             } else if (file.isFile()) {
                 send(server, "file");
+                recv(server);
                 downloadfile(server, file_to_download_loc, requested_file);
                 recv(server);
                 send(server, "ok");
@@ -396,8 +418,6 @@ public class Activity1 extends AppCompatActivity {
         }
 
         private List<String> getallfiles(File directory) {
-            Log.d("filesofdir", "Directory: " + directory.getAbsolutePath() + "\n");
-
             final File[] files = directory.listFiles();
             List<String> files2 = new ArrayList<String>();
             if (files != null) {
@@ -422,7 +442,7 @@ public class Activity1 extends AppCompatActivity {
             return "current path set to:" + current_location;
         }
     }
-        
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)

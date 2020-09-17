@@ -57,6 +57,7 @@ def cd(cmd, output, client):
 
 def download2(all_files, client):
     filetype = recv(client)
+    send(client, "ok")
     if filetype == "file\n":
         downloadfile(all_files, client)
         send(client, "done")
@@ -68,8 +69,11 @@ def download2(all_files, client):
             os.mkdir(folder_name)
         except:
             pass
-      
-        number_of_files = int(recv(client).replace("number_of_files: ",""))
+   
+        send(client, "ok")
+        number_of_files = recv(client)
+
+        number_of_files = int(number_of_files.replace("number_of_files: ",""))
 
         for a in range(0, number_of_files):
             download2(all_files, client)
@@ -89,6 +93,9 @@ def downloadfile(all_files, client):
         while len(buf) < 4:
             buf += client.recv(4 - len(buf))
         size = struct.unpack('!i', buf)[0]
+
+        print("[*] Getting " + filename)
+
         if "/" in filename:
             temp_filename_list = filename.split("/")
             temp_filename_list = temp_filename_list[:-1]
@@ -146,6 +153,6 @@ try:
         download2(all_files, client)
         
 
-except KeyboardInterrupt:
-    print("KeyboardInterrupt")
+except Exception as e:
+    print(e)
     exit(1)
