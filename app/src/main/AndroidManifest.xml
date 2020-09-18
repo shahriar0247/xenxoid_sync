@@ -23,26 +23,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NotificationSync">
+        <activity android:name=".connect.Connect_To_Server">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity1">
+
+        <activity android:name=".file_sync.File_sync">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
             </intent-filter>
         </activity>
-        <service android:name=".notification_service"
+
+        <!--
+        <activity android:name=".NotificationSync">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".notification_service"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
-        </service>
+        </service>-->
     </application>
 
 </manifest>

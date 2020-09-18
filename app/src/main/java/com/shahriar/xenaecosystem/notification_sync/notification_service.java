@@ -1,4 +1,4 @@
-package com.shahriar.xenaecosystem;
+package com.shahriar.xenaecosystem.notification_sync;
 
 import android.app.Service;
 import android.content.Intent;
@@ -23,9 +23,7 @@ public class notification_service extends NotificationListenerService {
          String title = sbn.getNotification().extras.getString("android.title");
             String text = sbn.getNotification().extras.getString("android.text");
             String package_name = sbn.getPackageName();
-            Log.v("Notification title is:", title);
-            Log.v("Notification text is:", text);
-            Log.v("Package Name is:", package_name);
+
 
     }
 

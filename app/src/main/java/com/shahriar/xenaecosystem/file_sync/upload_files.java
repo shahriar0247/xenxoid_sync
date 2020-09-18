@@ -1,10 +1,14 @@
-package com.shahriar.xenaecosystem;
+package com.shahriar.xenaecosystem.file_sync;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+
+import com.shahriar.xenaecosystem.connect.Connect_To_Server;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,12 +23,20 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
-class upload_sync extends Thread {
+public class upload_files implements Runnable {
+
+    String ip;
+    String password;
+
+    public upload_files(String temp_ip, String temp_password) {
+        ip = temp_ip;
+        password = temp_password;
+    }
 
     public List<String> files_to_sync = new ArrayList<>();
     String current_location = Environment.getExternalStorageDirectory().toString();
     String local_location = "";
-    List<Activity1.folder> all_folders;
+    List<File_sync.folder> all_folders;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -61,11 +73,16 @@ class upload_sync extends Thread {
         Socket sock = null;
 
         try {
-            sock = new Socket("3.1.5.104", 4422);
-            send(sock, "hello");
+            sock = new Socket(ip, 4422);
+            send(sock, password);
+            String pass_from_server = recv(sock);
 
-            String text = recv(sock);
-            Log.d("from server", text);
+            if (pass_from_server == password){
+                return sock;
+            }
+            else{
+               return null;
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

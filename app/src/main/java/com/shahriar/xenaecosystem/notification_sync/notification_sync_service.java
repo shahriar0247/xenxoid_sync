@@ -1,4 +1,4 @@
-package com.shahriar.xenaecosystem;
+package com.shahriar.xenaecosystem.notification_sync;
 
 import android.os.Build;
 

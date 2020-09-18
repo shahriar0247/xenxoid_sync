@@ -1,4 +1,4 @@
-package com.shahriar.xenaecosystem;
+package com.shahriar.xenaecosystem.file_sync;
 
 
 import androidx.annotation.RequiresApi;
@@ -10,26 +10,15 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
-
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.location.Location;
 
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -38,6 +27,8 @@ import android.widget.LinearLayout;
 
 import android.widget.TextView;
 
+
+import com.shahriar.xenaecosystem.R;
 
 import java.io.File;
 
@@ -49,7 +40,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Activity1 extends AppCompatActivity {
+public class File_sync extends AppCompatActivity {
 
 
     public List<String> files_to_sync = new ArrayList<>();
@@ -61,10 +52,9 @@ public class Activity1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout1);
+        setContentView(R.layout.layout_file_sync);
 
-        upload_sync thread = new upload_sync();
-        thread.start();
+
 
         main(current_location);
     }
