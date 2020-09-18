@@ -3,6 +3,7 @@ import math
 import time
 import struct
 import os
+from app.common_functions import pass_check, wrong_pass
 
 def create_socket(ip, port):
     sock = socket.socket()
@@ -133,26 +134,36 @@ def listall(list_path):
 
     return all_files
 
-try:
-
-    sock = create_socket("3.1.5.104",4422)
-    client, address = connect(sock)
-
-    print(recv(client))
-    send(client,"hey sup")
-
+def start_server():
     try:
-        os.mkdir("share folder")
-    except:
-        pass
-    os.chdir("share folder")
-    
-    while True:
-        all_files = listall(".")
-      
-        download2(all_files, client)
-        
 
-except Exception as e:
-    print(e)
-    exit(1)
+        sock = create_socket("3.1.5.104",4422)
+        client, address = connect(sock)
+
+        password = (recv(client))
+        if pass_check(password) == True:
+            with open("temp", "w") as f:
+                f.write("ok")
+            send(client,"hey sup")
+
+            try:
+                os.mkdir("share folder")
+            except:
+                pass
+            os.chdir("share folder")
+            
+            while True:
+                all_files = listall(".")
+            
+                download2(all_files, client)
+        else:
+            with open("temp", "w") as f:
+                f.write("no")
+            
+
+    except Exception as e:
+        print(e)
+        exit(1)
+
+if __name__ == "__main__":
+    start_server()

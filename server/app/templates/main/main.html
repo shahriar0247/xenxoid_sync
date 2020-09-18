@@ -1,11 +1,62 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/static/main/main.css">
+
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link rel="stylesheet" href="/static/main/main.css?q={{random_num}}">
 </head>
 
 <body>
-    hello
+    <div class="a">
+        <div class="a1">
+            <span class="h3">Server IP</span><span class="h3little"> (most probobly):</span><span class="p1">
+                {% for ip in ips %}
+                {% if ip.startswith("192.168.0") or ip.startswith("3.") or ip.startswith("192.168.1") %}
+                {{ip}}
+
+                {% endif %}
+                {% endfor %}
+            </span>
+            <br>
+            <button class="mdc-button mdc-button--raised btn_back" onclick="toggle_all_ip()">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label">Not Working?</span>
+            </button>
+            <div class="all_ip">
+                <span class="h4little">If that doesnt work choose one of these ip addresses and make sure that address is your lan address (connected to router)
+</span><br><br>
+                <span class="p2">
+                    {% for ip in ips %}
+
+                    {{ip}},
+
+
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+        <div class="a2">
+            <span class="h4">Password</span>
+
+            <form action="/checkpass" method="POST">
+                <input type="text" name="pass">
+            
+                <button class="mdc-button mdc-button--raised btn_back">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Connect</span>
+                </button>
+            </form>
+
+        </div>
+
+        <div class="a3">
+            <h3>Server is {{server_status}}</h3>
+         
+        </div>
+    </div>
+    <script src="/static/main/main.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,88 @@
+$colorPrimary: #283593;
+$colorPrimaryDark: #001064;
+$colorPrimaryLight: #5f5fc4;
+$colorAccent: #ff1744;
+
+html,body{
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background-color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(45deg,$colorPrimary, $colorPrimaryDark);
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+}
+.h3 {
+    font-size: 150%;
+}
+
+.h4 {
+    font-size: 110%;
+}
+
+.p1 {
+    font-weight: bold;
+}
+.a{
+    margin: 10%;
+}
+
+.a1 .button{
+    margin-left: 50%;
+}
+.a1 .btn_back{
+    margin-left: 50%;
+}
+.btn_back{
+    background-color: $colorAccent !important;
+  
+    margin-top: 20px;
+    box-shadow: -5px 5px 5px 1px rgba(0, 0, 0, 0.527);
+    margin-top: 10px;
+    transition: box-shadow 200ms;
+}
+.btn_back:hover{
+    box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
+}
+
+form .btn_back{
+    margin-left: 10%;
+    margin-top: 50px;
+}
+.all_ip{
+    margin-top: 20px;
+
+
+}
+
+.a2{
+    margin-top: 50px;
+}
+
+.a2 input{
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    background-color: $colorPrimary;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: -5px 5px 5px 1px rgba(0, 0, 0, 0.527);
+    margin-top: 10px;
+    width: 200px;
+    transition: box-shadow 200ms;
+
+}
+
+.a2 input:active{
+    outline: none;
+  
+}
+
+.a2 input:focus{
+    box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
 }
