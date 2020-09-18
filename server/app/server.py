@@ -140,11 +140,12 @@ def start_server():
         sock = create_socket("3.1.5.104",4422)
         client, address = connect(sock)
 
-        password = (recv(client))
+        password = (recv(client))[:-1]
+        send(client,password)
         if pass_check(password) == True:
             with open("temp", "w") as f:
                 f.write("ok")
-            send(client,"hey sup")
+            
 
             try:
                 os.mkdir("share folder")

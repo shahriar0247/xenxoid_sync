@@ -12,6 +12,12 @@ body {
   color: white;
 }
 
+.a {
+  margin-top: 100px;
+  margin-left: 100px;
+  margin-right: 10px;
+}
+
 .h3 {
   font-size: 150%;
 }
@@ -24,21 +30,11 @@ body {
   font-weight: bold;
 }
 
-.a {
-  margin: 10%;
-}
-
-.a1 .button {
-  margin-left: 50%;
-}
-
 .a1 .btn_back {
-  margin-left: 50%;
+  margin-left: 300px;
 }
 
 .btn_back {
-  background-color: #ff1744 !important;
-  margin-top: 20px;
   -webkit-box-shadow: -5px 5px 5px 1px rgba(0, 0, 0, 0.527);
           box-shadow: -5px 5px 5px 1px rgba(0, 0, 0, 0.527);
   margin-top: 10px;
@@ -48,14 +44,17 @@ body {
   transition: box-shadow 200ms, -webkit-box-shadow 200ms;
 }
 
+.btn_red {
+  background-color: #ff1744 !important;
+}
+
+.btn_blue {
+  background-color: #283593 !important;
+}
+
 .btn_back:hover {
   -webkit-box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
           box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
-}
-
-form .btn_back {
-  margin-left: 10%;
-  margin-top: 50px;
 }
 
 .all_ip {
@@ -91,5 +90,34 @@ form .btn_back {
 .a2 input:focus {
   -webkit-box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
           box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
+}
+
+.a3 {
+  margin-top: 50px;
+}
+
+.a4 {
+  position: absolute;
+  display: block;
+  background-color: white;
+  color: black;
+  padding: 40px;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  border-radius: 10px;
+  -webkit-box-shadow: -15px 15px 4px 1px rgba(0, 0, 0, 0.432);
+          box-shadow: -15px 15px 4px 1px rgba(0, 0, 0, 0.432);
+  display: none;
+}
+
+.a5 {
+  height: 120vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
 }
 /*# sourceMappingURL=main.css.map */
