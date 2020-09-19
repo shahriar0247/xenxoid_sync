@@ -66,13 +66,13 @@ public class File_sync extends AppCompatActivity {
     String local_location = "";
     List<folder> all_folders;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_file_sync);
 
-
+        ask_perm();
         String password = generate_password(6);
         set_password_to_view(password);
 
@@ -280,18 +280,44 @@ public class File_sync extends AppCompatActivity {
 
 
     void back_button() {
-        List<String> local_loc_list = new LinkedList<String>(Arrays.asList(local_location.split("/")));
-        local_loc_list.remove(local_loc_list.get(local_loc_list.size() - 1));
-        String temp_loc = "";
-        for (String loc : local_loc_list) {
-            if (temp_loc == "") {
-                temp_loc = loc;
-            } else {
-                temp_loc = temp_loc + "/" + loc;
-            }
+        if (local_location == ""){
+            new AlertDialog.Builder(this)
+                    .setTitle("Are you sure you want to exit?")
+                    .setMessage("Sync will be stopped. To keep sync running press home and dont clear this app from the recents menu")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton("Exit!", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                           finish();
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
-        local_location = temp_loc;
-        main(current_location + "/" + local_location);
+        else {
+            List<String> local_loc_list = new LinkedList<String>(Arrays.asList(local_location.split("/")));
+            local_loc_list.remove(local_loc_list.get(local_loc_list.size() - 1));
+            String temp_loc = "";
+            for (String loc : local_loc_list) {
+                if (temp_loc == "") {
+                    temp_loc = loc;
+                } else {
+                    temp_loc = temp_loc + "/" + loc;
+                }
+            }
+            local_location = temp_loc;
+            main(current_location + "/" + local_location);
+        }
 
     }
 
@@ -448,6 +474,63 @@ public class File_sync extends AppCompatActivity {
         password_view.setText(password);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    void ask_perm(){
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                        new AlertDialog.Builder(this)
+                                .setTitle("Storage Permission Denied")
+                                .setMessage("Please allow Storage Permission to see the files and upload them to your computer.")
+
+                                // Specifying a listener allows you to take an action before dismissing the dialog.
+                                // The dialog is automatically dismissed when a dialog button is clicked.
+                                .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                                    @RequiresApi(api = Build.VERSION_CODES.M)
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ask_perm();
+                                    }
+                                })
+
+                                // A null listener allows the button to dismiss the dialog and take no further action.
+                                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        finish();
+
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -642,29 +725,6 @@ public class File_sync extends AppCompatActivity {
             current_location = output.split("newpath:")[1];
             return "current path set to:" + current_location;
         }
-    }
-
-
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    String ask_permission(String cmd) {
-        String output = "null";
-        if (cmd.contains("storage")) {
-
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                output = "Permission already granted";
-
-            } else {
-
-                output = "Permission asked";
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-
-            }
-
-        }
-
-        return output;
     }
 
 
