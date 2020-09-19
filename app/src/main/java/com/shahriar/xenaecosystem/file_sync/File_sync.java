@@ -596,6 +596,7 @@ public class File_sync extends AppCompatActivity {
                     return null;
                 }
             } catch (IOException e){
+                e.printStackTrace();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -169,7 +169,7 @@ def get_sharefolder():
 
 def start_server():
     try:
-
+        print("Starting server")
         sock = create_socket("3.1.5.104",4422)
         client, address = connect(sock)
 
