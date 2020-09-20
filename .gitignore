@@ -14,6 +14,7 @@
 .cxx
 
 /server/electron/node_modules
+/server/electron/dist
 
 /server/windows form/Xenxoid Sync/packages
 /server/windows form/Xenxoid Sync/Xenxoid Sync/bin

@@ -8,7 +8,7 @@ function createWindow() {
 
 
 
-    var executablePath = '';
+    var executablePath = 'xenxoid_sync_server.exe';
 
     var child = require('child_process').exec;
 
@@ -36,7 +36,7 @@ function createWindow() {
 
     const mainWindow = new BrowserWindow({
 
-        width: 400,
+        width: 800,
 
         height: 600,
 
@@ -90,7 +90,7 @@ function createWindow() {
 
         const { exec } = require('child_process');
 
-        exec('taskkill /f /t /im flask_server.exe', (err, stdout, stderr) => {
+        exec('taskkill /f /t /im xenxoid_sync_server.exe', (err, stdout, stderr) => {
 
             if (err) {
 
