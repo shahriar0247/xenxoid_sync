@@ -40,6 +40,8 @@ function createWindow() {
 
         height: 600,
 
+        icon: __dirname + '/img/app_icon.ico',
+
         webPreferences: {
 
             preload: path.join(__dirname, 'preload.js')
