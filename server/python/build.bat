@@ -1,0 +1,1 @@
+pyinstaller -F --add-data="app;app" run.py

@@ -45,7 +45,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.PortUnreachableException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -55,6 +58,7 @@ import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 
 public class File_sync extends AppCompatActivity {
@@ -411,7 +415,7 @@ public class File_sync extends AppCompatActivity {
     public void alert_error(String error1){
         new AlertDialog.Builder(this)
                 .setTitle(error1)
-                .setMessage("1) Please download and open the Computer app\n\n2)Type the password shown on the mobile in your Computer app and click on 'Start Server'\n\n3)Write the ip address of your computer and click on 'Connect to Server'.\n\nStill not working?\nIf you entered an ip from computer please click on 'Not Working?' on Computer app and try another ip (typically that starts with '192.168') and is your lan ip (of your router)\nAnd make sure your computer and mobile is on the same network (same wifi)")
+                .setMessage("Steps:\n\n1) Please download and open the Computer app\n\n2)Type the password shown on the mobile in your Computer app and click on 'Start Server'\n\n3)Write the ip address of your computer and click on 'Connect to Server'.\n\nStill not working?\nIf you entered an ip from computer please click on 'Not Working?' on Computer app and try another ip (typically that starts with '192.168') and is your lan ip (of your router)\nAnd make sure your computer and mobile is on the same network (same wifi)")
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
@@ -583,9 +587,11 @@ public class File_sync extends AppCompatActivity {
 
         Socket conect_to_server() {
             Socket sock = null;
-
+            String alert = "null";
             try {
-                sock = new Socket(ip, 4422);
+
+                sock = new Socket();
+                sock.connect(new InetSocketAddress(ip, 65022), 2000);
                 send(sock, password);
                 String pass_from_server = recv(sock);
 
@@ -593,18 +599,35 @@ public class File_sync extends AppCompatActivity {
                     info = "ok";
                     return sock;
                 } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            alert_error("Wrong password!");
+                        }
+                    });
                     return null;
                 }
-            } catch (IOException e){
+            } catch ( SocketTimeoutException e){
                 e.printStackTrace();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        alert_error("No device with this ip found.");
-                    }
-                });
+                alert = "No device with this ip found. Please check if you are connected to your wifi";
+            }
+            catch (UnknownHostException e){
+                e.printStackTrace();
+                alert = "Please enter a valid ip written in the desktop app, typically starting with 192.168";
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                alert = "Unknown error. Please try again and if problem persists check if you are connected to wifi and if this app has network permission.";
+
             }
 
+            final String finalAlert = alert;
+            runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                alert_error(finalAlert);
+            }
+        });
             return sock;
         }
 

@@ -13,7 +13,7 @@ body {
 }
 
 .a {
-  margin-top: 100px;
+  margin-top: 60px;
   margin-left: 100px;
   margin-right: 10px;
 }
@@ -61,11 +61,7 @@ body {
   margin-top: 20px;
 }
 
-.a2 {
-  margin-top: 50px;
-}
-
-.a2 input {
+input {
   border: none;
   background: none;
   outline: none;
@@ -81,11 +77,11 @@ body {
   transition: box-shadow 200ms, -webkit-box-shadow 200ms;
 }
 
-.a2 input:active {
+input:active {
   outline: none;
 }
 
-.a2 input:focus {
+input:focus {
   -webkit-box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
           box-shadow: -6px 6px 5px 2px rgba(0, 0, 0, 0.527);
 }
@@ -115,5 +111,10 @@ body {
   top: 0;
   left: 0;
   display: none;
+}
+
+.error {
+  font-weight: bold;
+  color: #ff1744;
 }
 /*# sourceMappingURL=main.css.map */

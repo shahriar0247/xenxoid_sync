@@ -25,3 +25,9 @@ function okay(){
     document.getElementsByClassName("a4")[0].style.display = "none"
     document.getElementsByClassName("a5")[0].style.display = "none"
 }
+
+function donate(){
+    var xhr = new XMLHttpRequest();
+xhr.open("GET", "/donate", true);
+xhr.send();
+}

@@ -3,7 +3,7 @@ import math
 import time
 import struct
 import os
-from app.common_functions import pass_check, wrong_pass
+from app.common_functions import pass_check, wrong_pass, get_temp, get_pass
 import platform
 import pathlib
 
@@ -167,16 +167,17 @@ def get_sharefolder():
         loc = f.readline()
     return loc
 
-def start_server():
+def start_server(ip):
+    temp = get_temp()
     try:
         print("Starting server")
-        sock = create_socket("3.1.5.104",4422)
+        sock = create_socket(ip,65022)
         client, address = connect(sock)
 
         password = (recv(client))[:-1]
-        send(client,password)
+        send(client,get_pass())
         if pass_check(password) == True:
-            with open("temp", "w") as f:
+            with open(temp, "w") as f:
                 f.write("ok")
             
             os.chdir(get_sharefolder())
@@ -185,11 +186,14 @@ def start_server():
             
                 download2(all_files, client)
         else:
-            with open("temp", "w") as f:
+            
+            with open(temp, "w") as f:
                 f.write("no")
             
 
     except Exception as e:
+        with open(temp, "w") as f:
+            f.write("server_error")
         print(e)
         exit(1)
 
