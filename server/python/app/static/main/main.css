@@ -30,10 +30,6 @@ body {
   font-weight: bold;
 }
 
-.a1 .btn_back {
-  margin-left: 300px;
-}
-
 .btn_back {
   -webkit-box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.527);
           box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.527);
