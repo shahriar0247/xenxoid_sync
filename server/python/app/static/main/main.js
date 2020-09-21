@@ -31,3 +31,10 @@ function donate(){
 xhr.open("GET", "/donate", true);
 xhr.send();
 }
+
+function server_started(){
+    document.getElementById("server_stat").textContent = "Server Starting..."
+    setTimeout(function() {
+        document.getElementById("server_stat").textContent = "Server Started!"
+}, 1000);
+}

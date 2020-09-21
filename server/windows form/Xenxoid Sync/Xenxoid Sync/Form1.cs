@@ -19,7 +19,7 @@ namespace Xenxoid_Sync
 
         public Form1()
         {
-            start_server();
+            //start_server();
             InitializeComponent();
 
         }
@@ -39,7 +39,7 @@ namespace Xenxoid_Sync
         {
             Cef.Initialize(new CefSettings());
             loadurl();
-            browser = new ChromiumWebBrowser("http://127.0.0.1:5000/");
+            browser = new ChromiumWebBrowser("http://127.0.0.1:65023/");
             this.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
         }
@@ -54,7 +54,7 @@ namespace Xenxoid_Sync
         {
             while (true)
             {
-                if (RemoteFileExists("http://127.0.0.1:5000/"))
+                if (RemoteFileExists("http://127.0.0.1:65023/"))
                 {
                     break;
                 }

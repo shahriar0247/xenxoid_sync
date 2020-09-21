@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <group android:scaleX="0.0675"
+      android:scaleY="0.0675"
+      android:translateX="19.44"
+      android:translateY="19.44">
+      <path
+          android:fillColor="#222"
+          android:name="Rounded Rectangle 1"
+          android:pathData="m12 12v1000h1000v-1000z" />
+      <path
+          android:fillColor="#ff1744"
+          android:name="Rounded Rectangle 2"
+          android:pathData="m170.8 423.3 273.9 -294c29 -31.1 77.8 -32.9 108.9 -3.9c31.1 29 32.9 77.8 3.9 108.9l-273.9 294c-29 31.1 -77.8 32.9 -108.9 3.9c-31.1 -29 -32.9 -77.8 -3.9 -108.9z" />
+      <path
+          android:fillColor="#fff"
+          android:name="Rounded Rectangle 2 copy"
+          android:pathData="m437.7 647.6 273.9 -294c29 -31.1 77.8 -32.9 108.9 -3.9c31.1 29 32.9 77.8 3.9 108.9l-273.9 294c-29 31.1 -77.8 32.9 -108.9 3.9c-31.1 -29 -32.9 -77.8 -3.9 -108.9z" />
+  </group>
+</vector>

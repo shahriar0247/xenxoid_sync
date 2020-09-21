@@ -47,10 +47,11 @@
                     <br>
                    
                 
-                    <button class="mdc-button mdc-button--raised btn_back btn_red">
+                    <button class="mdc-button mdc-button--raised btn_back btn_red" onclick="server_started()">
                         <div class="mdc-button__ripple"></div>
                         <span class="mdc-button__label">Start Server</span>
                     </button>
+                    
                 </form>
 
             </div>
@@ -58,7 +59,7 @@
             <div class="a3">
               
 
-                <h3>Server is {{server_status}}</h3>
+                <h3 id="server_stat">Server is {{server_status}}</h3>
                 {% if server_status == "connected" %}
 
                 <form action="/open_sharefolder" method="POST">
