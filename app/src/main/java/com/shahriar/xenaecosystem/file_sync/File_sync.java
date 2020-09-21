@@ -70,7 +70,6 @@ public class File_sync extends AppCompatActivity {
     String local_location = "";
     List<folder> all_folders;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +90,6 @@ public class File_sync extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     void main(String location) {
         LinearLayout main_layout = getmainlayout();
         List<String> all_files = ls(new File(location));
@@ -120,7 +118,6 @@ public class File_sync extends AppCompatActivity {
         return null;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     ArrayList<folder> create_folders(List<String> files, final LinearLayout main_layout) {
 
 
@@ -478,7 +475,6 @@ public class File_sync extends AppCompatActivity {
         password_view.setText(password);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     void ask_perm(){
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -490,7 +486,6 @@ public class File_sync extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -510,7 +505,7 @@ public class File_sync extends AppCompatActivity {
                                 // Specifying a listener allows you to take an action before dismissing the dialog.
                                 // The dialog is automatically dismissed when a dialog button is clicked.
                                 .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
-                                    @RequiresApi(api = Build.VERSION_CODES.M)
+
                                     public void onClick(DialogInterface dialog, int which) {
                                         ask_perm();
                                     }
@@ -552,7 +547,6 @@ public class File_sync extends AppCompatActivity {
             password = temp_password;
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void run() {
 
@@ -567,7 +561,6 @@ public class File_sync extends AppCompatActivity {
             }
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         void sync_once(Socket server){
             try {
                 for (String file_to_sync : files_to_sync) {
@@ -666,7 +659,6 @@ public class File_sync extends AppCompatActivity {
         }
 
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         void download2(Socket server, String requested_file) {
             String output = "null";
 
@@ -701,7 +693,6 @@ public class File_sync extends AppCompatActivity {
 
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         void downloadfile(Socket server, String file_to_download, String requested_file) {
             try {
                 File file = new File(file_to_download);
