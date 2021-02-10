@@ -124,6 +124,12 @@ public class File_sync extends AppCompatActivity {
         main_layout.removeAllViews();
 
         final ArrayList<folder> all_folders = new ArrayList<folder>();
+        if (files == null){
+            TextView no_file_error = new TextView(this);
+            no_file_error.setText("Unable to Show files, Did you deny storage permission?");
+            no_file_error.setTextColor(Color.parseColor("#dddddd"));
+            main_layout.addView(no_file_error);
+        }
         if (files.size() == 0) {
 
             TextView no_file_error = new TextView(this);
