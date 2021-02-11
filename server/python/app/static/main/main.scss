@@ -25,6 +25,7 @@ body{
 .top, .all_files, .buttons{
     margin:10px;
     border: 1px solid black;
+    border-radius: 10px;
 }
 .accent_text{
     color: $colorPrimary;
@@ -47,9 +48,26 @@ body{
 .main{
     display: grid;
     grid-template-columns: 1fr 3fr;
+    margin: 0;
 }
 
 .right_main{
     display: grid;
     grid-template-rows: 1fr 6fr 2fr;
+}
+
+.quick_access{
+    backdrop-filter: blur(10px);
+   
+}
+.right_main{
+    backdrop-filter: blur(10px);
+}
+
+.location{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    font-size: 120%;
 }
