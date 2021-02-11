@@ -1,111 +1,68 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-
-    <link rel="stylesheet" href="/static/main/main.css?q={{random_num}}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/main/main.css">
 </head>
-
 <body>
+    <div class="b">
+        <div class="circle b1 red"></div>
+        <div class="circle b2 red"></div>
+        <div class="circle b3 red"></div>
+        <div class="circle b4 red"></div>
+        <div class="circle b5 red"></div>
+        <div class="circle b6 blue"></div>
+        <div class="circle b7 blue"></div>
+        <div class="circle b8 blue"></div>
+        <div class="circle b9 blue"></div>
+        <div class="circle b10 blue"></div>
+    </div>
     <div class="a">
         <div class="a1">
-            <span class="h3">Server IP address</span><span class="h3little"> (most probobly):</span><span class="p1">
-             
-                {{ip}}
-            </span>
-            <br>
-            <br>
-            <div class="error">{{error}}</div>
-            <button class="mdc-button mdc-button--raised btn_back btn_blue" onclick="toggle_all_ip()">
-                <div class="mdc-button__ripple"></div>
-                <span class="mdc-button__label">Server IP Address empty</span>
-            </button>
-           
-            <div class="all_ip">
-                <span class="h4little">
-                    <ol>
-                  <li>  Check if you are connected to your router</li>
-               <li>     <h4>Advanced Users!</h4> If your local ip doesnt start with 192.168.0 or 192.168.1 (or you want to
-                    use it in a different LAN and not the router) then you can manually your computer ip here
-                   <br>
-                </span><br>
-            </li>
-            </ol>
-            <form action="/checkpass" method="POST">
-                <span class="h4">Custom IP</span>
-                <br>
-                <input type="text" name="custom_ip" value="{{ip}}">
-          
-            </div>
-            <div class="a2">
-                <span class="h4">Password</span>
-
-                <br>
-                    <input type="text" name="pass">
-                    <br>
-                   
-                
-                    <button class="mdc-button mdc-button--raised btn_back btn_red" onclick="server_started()">
-                        <div class="mdc-button__ripple"></div>
-                        <span class="mdc-button__label">Start Server</span>
-                    </button>
-                    
-                </form>
-
-            </div>
-
-            <div class="a3">
-              
-
-                <h3 id="server_stat">Server is {{server_status}}</h3>
-                {% if server_status == "connected" %}
-
-                <form action="/open_sharefolder" method="POST">
-                    <button class="mdc-button mdc-button--raised btn_back btn_red">
-                        <div class="mdc-button__ripple"></div>
-                        <span class="mdc-button__label">Open Share Folder</span>
-                    </button>
-                </form>
-
-                {% endif %}
-                <button class="mdc-button mdc-button--raised btn_back btn_blue" onclick="help()">
-                    <div class="mdc-button__ripple"></div>
-                    <span class="mdc-button__label">Help</span>
-                </button>
-              <br>
-                <button class="mdc-button mdc-button--raised btn_back btn_blue" onclick="donate()">
-                    <div class="mdc-button__ripple"></div>
-                    <span class="mdc-button__label">Donate</span>
-                </button>
-                <br> <br> <p>This is made by one 18 year old kid. I hope you like my app and support me!</p>
-            </div>
-            <div class="a5"></div>
-            <div class="a4">
-                <ol>
-                    <li>Please download and open the Mobile app: Xenxoid Sync</li>
-                    <br>
-                    <li>Type the password shown on the mobile in your Computer app and click on
-                        'Start Server'</li>
-                    <br>
-                    <li>Write the ip address of your computer and click on 'Connect to Server'</li>
+             <div class="a11">
+                <h3>Help</h3>
+                <p><ol>
+                    <li>Please download and open the
+                        Mobile app: Xenxoid Sync</li><br>
+                        <li>
+                            Type the password shown on the
+                            mobile in your Computer app
+                            and click on 'Start Server'
+                        </li><br>
+                        <li>
+                            Write the ip address of your computer
+                            and click on 'Connect to Server'
+                        </li><br>
                 </ol>
-             <br>
-                <button class="mdc-button mdc-button--raised btn_back btn_red" onclick="help()">
-                    <div class="mdc-button__ripple"></div>
-                    <span class="mdc-button__label">Watch Video!</span>
-                </button>
-                <button class="mdc-button mdc-button--raised btn_back btn_red" style="margin-left: 20px;"
-                    onclick="okay()">
-                    <div class="mdc-button__ripple"></div>
-                    <span class="mdc-button__label">Okay</span>
-                </button>
-            </div>
-
+                    
+                  
+                    
+                </p>
+             </div>
         </div>
+        <div class="a2">
+                <div class="a21">
+                   
+                        <h2>Xenxoid Synx</h2>
+                 
+                
+                        <p>This computer IP (Server IP): 192.168.0.1
+                            <span class="hint">---write that in your phone</span></p>
+                  
+                </div>
+                <div class="a22">
+                    <div class="a221">
 
-        <script src="/static/main/main.js"></script>
+                    </div>
+                    <div class="a222">
+
+                    </div>
+                </div>
+        </div>
+    </div>
+    
 </body>
-
 </html>
