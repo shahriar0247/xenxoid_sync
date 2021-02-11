@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, request
 from app.common_functions import *
-from app.server import set_share_folder, start_server, get_sharefolder, get_temp
+from app.server import start_server, get_temp
 import threading
 import platform
 import os

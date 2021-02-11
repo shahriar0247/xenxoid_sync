@@ -2,6 +2,45 @@ import random
 import subprocess
 import os
 import tempfile
+import math
+import time
+import struct
+import os
+
+import platform
+import pathlib
+
+
+def set_share_folder(location):
+    current_loc = pathlib.Path(__file__).parent.absolute()
+    share_loc = os.path.join(current_loc, "share_loc")
+    if (location == "desktop"):
+        if (platform.system()) == "Windows":
+            location = os.path.join(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop'), "share folder")
+        elif (platform.system()) == "Linux":
+            location = os.path.join(os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), "share folder")
+         
+    else:
+        pass
+    
+    with open(share_loc, "w") as f:
+        f.write(location)
+
+    try:
+        os.mkdir(location)
+    except:
+        pass
+    
+    return location
+
+
+    
+def get_sharefolder():
+    current_loc = pathlib.Path(__file__).parent.absolute()
+    share_loc = os.path.join(current_loc, "share_loc")
+    with open(share_loc, "r") as f:
+        loc = f.readline()
+    return loc
 
 def shell(cmd):
     output = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
@@ -30,6 +69,7 @@ def get_ip():
 
 def get_temp():
     return os.path.join(tempfile.gettempdir(), "xenxoid_sync_temp")
+
 def pass_check(password):
     return get_pass() == password
 
@@ -45,3 +85,6 @@ def add_pass(password):
 
 def wrong_pass():
     pass
+
+def get_all_files():
+    print(os.walk(get_sharefolder()))

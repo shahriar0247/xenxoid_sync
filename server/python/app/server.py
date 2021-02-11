@@ -137,36 +137,7 @@ def listall(list_path):
 
     return all_files
 
-def set_share_folder(location):
-    current_loc = pathlib.Path(__file__).parent.absolute()
-    share_loc = os.path.join(current_loc, "share_loc")
-    if (location == "desktop"):
-        if (platform.system()) == "Windows":
-            location = os.path.join(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop'), "share folder")
-        elif (platform.system()) == "Linux":
-            location = os.path.join(os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), "share folder")
-         
-    else:
-        pass
-    
-    with open(share_loc, "w") as f:
-        f.write(location)
 
-    try:
-        os.mkdir(location)
-    except:
-        pass
-    
-    return location
-
-
-    
-def get_sharefolder():
-    current_loc = pathlib.Path(__file__).parent.absolute()
-    share_loc = os.path.join(current_loc, "share_loc")
-    with open(share_loc, "r") as f:
-        loc = f.readline()
-    return loc
 
 def start_server(ip):
     temp = get_temp()
