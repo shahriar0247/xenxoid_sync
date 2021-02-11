@@ -1,4 +1,4 @@
-$colorPrimary: #283593;
+$colorPrimary: #2CD889;
 $colorPrimaryDark: #001064;
 $colorPrimaryLight: #5f5fc4;
 $colorAccent: #ff1744;
@@ -10,96 +10,59 @@ body {
 }
 body{
   font-family: Arial, Helvetica, sans-serif;
-}
-div {
-  width: 100%;
-  height: 100%;
+  
 }
 
-.circle {
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-  display: inline-block;
-  position: absolute;
-}
-.b {
-  height: 0;
-  width: 0;
-}
-.red {
-  background-color: $colorAccent;
-}
-.blue {
-  background-color: $colorPrimary;
-}
-.b1 {
-  top: 10%;
-  left: 20%;
-  height: 100px;
-  width: 100px;
+img{
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
 }
 .a {
-  display: grid;
-  grid-template-columns: 2fr 6fr;
-  height: 100vh;
+    display: grid;
+  grid-template-columns: 3fr 2fr;
+}
+.accent_text{
+    color: $colorPrimary;
 }
 
-.a1 {
-  backdrop-filter: blur(10px);
-  border: rgba(51, 51, 51, 0.5) solid 1px;
-  height: 100vh;
-  min-width: 280px;
+.main{
+    text-align: center;
+    margin: 60px;
+}
+.hint{
+    color: #646D82;
+}
+.button{
+    background-color: $colorPrimary;
+    padding: 13px;
+    margin-left: 100px;
+    margin-right: 100px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    border: 1px $colorPrimary solid;
+    transition: all 200ms;
+    cursor: pointer;
+}
+.button:hover{
+background-color: white;
+color: $colorPrimary;
 }
 
-.a11{
-    margin:8%;
-    width: 82%;
-    height: 50vh;
-    margin-top: 50vh;
+.password {
+    border: none;
+    outline: none;
+     border: 1px solid #08080828;
+    border-bottom: 2px solid #E9E9F0;
+    width: 60%;
+    font-size: 110%;
+    backdrop-filter: blur(10px);
+    box-shadow: -5px 3px 5px 1px rgba(0, 0, 0, 0.39);
+    padding: 7px;
+    transition: all 200ms;
 }
-.a11 ol{
-    padding-left: 20px;
-}
-.a2 {
-  display: grid;
-  grid-template-rows: 1fr 3fr;
-  height: 100vh;
-}
-
-.a22 {
-  display: grid;
-  grid-template-columns: 5fr 2fr;
+.password:hover{
+    box-shadow: -6px 4px 7px 1px rgba(0, 0, 0, 0.39);
 }
 
-.a21 {
-  margin-left: 50px;
-  width: 500px;
-}
-.a21 h2 {
-  margin-bottom: 40px;
-  margin-top: 50px;
-  font-size: 35px;
-}
-
-.a221 {
-  backdrop-filter: blur(10px);
-  border: rgba(51, 51, 51, 0.5) solid 1px;
-  margin: 4%;
-  margin-top: 5vh;
-  width: 92%;
-  height: 90%;
-}
-.a222 {
-  backdrop-filter: blur(10px);
-  border: rgba(51, 51, 51, 0.5) solid 1px;
-  margin-right: 4%;
-  margin-left: 0%;
-  margin-top: 5vh;
-  width: 92%;
-  height: 90%;
-}
-
-.a221, .a222{
-    box-shadow: -2px 2px 5px 5px rgba(0, 0, 0, 0.2);
-}
