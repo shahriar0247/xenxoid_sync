@@ -1,0 +1,119 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  image-rendering: optimizeSpeed;
+}
+
+.a {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 3fr 2fr;
+      grid-template-columns: 3fr 2fr;
+}
+
+.accent_text {
+  color: #2CD889;
+}
+
+.main {
+  text-align: center;
+  margin: 60px;
+  margin-top: 250px;
+}
+
+.hint {
+  color: #646D82;
+}
+
+.button {
+  background-color: #2CD889;
+  padding: 13px;
+  margin-left: 100px;
+  margin-right: 100px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  border: 1px #2CD889 solid;
+  -webkit-transition: all 200ms;
+  transition: all 200ms;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: white;
+  color: #2CD889;
+}
+
+.password {
+  background: none;
+  border: none;
+  outline: none;
+  border: 1px solid #08080828;
+  border-bottom: 2px solid #E9E9F0;
+  width: 60%;
+  font-size: 110%;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  -webkit-box-shadow: -5px 3px 5px 1px rgba(0, 0, 0, 0.39);
+          box-shadow: -5px 3px 5px 1px rgba(0, 0, 0, 0.39);
+  padding: 7px;
+  -webkit-transition: all 200ms;
+  transition: all 200ms;
+}
+
+.password:hover {
+  -webkit-box-shadow: -6px 4px 7px 1px rgba(0, 0, 0, 0.39);
+          box-shadow: -6px 4px 7px 1px rgba(0, 0, 0, 0.39);
+}
+
+.circle {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  z-index: -1;
+}
+
+.b {
+  height: 0;
+  width: 0;
+}
+
+.red {
+  background-color: #ff1744;
+}
+
+.blue {
+  background-color: #2CD889;
+}
+
+.b1 {
+  top: 340px;
+  right: 190px;
+  width: 50px;
+  height: 50px;
+}
+
+.b2 {
+  top: 370px;
+  right: 300px;
+  width: 50px;
+  height: 50px;
+}
+
+.hidden {
+  display: none;
+}
+/*# sourceMappingURL=login.css.map */

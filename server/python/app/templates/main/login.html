@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xenxoid Synx</title>
+    <link rel="stylesheet" href="/static/main/login.css">
+</head>
+<body>
+    <div class="b">
+        <div class="circle b1 red"></div>
+        <div class="circle b2 red"></div>
+        <div class="circle b3 red"></div>
+        <div class="circle b4 red"></div>
+        <div class="circle b5 red"></div>
+        <div class="circle b6 blue"></div>
+        <div class="circle b7 blue"></div>
+        <div class="circle b8 blue"></div>
+        <div class="circle b9 blue"></div>
+        <div class="circle b10 blue"></div>
+    </div>
+  <div class="a">
+    <div class="cover_img">
+        <img src="/static/images/2.jpg" alt="cover_img">
+    </div>
+    <div class="right">
+        <div class="main">
+            <h1>XENXOID <span class="accent_text">SYNX</span></h1>
+          
+            <p class="hint">Enter the password from your phone to show phone's files</p>
+            
+            <form action="/checkpass" method="POST">
+            <input type="text" name="custom_ip" value="{{ip}}" class="hidden">
+            <input type="text" class="password" name="pass">
+            
+            <p class="button">Enter</p>
+            <p class="hint"><strong>Device IP is {{ip}}</strong></p>
+        </div>
+    </div>
+  </div>
+</body>
+</html>
