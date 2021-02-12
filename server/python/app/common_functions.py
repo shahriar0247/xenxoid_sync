@@ -86,5 +86,50 @@ def add_pass(password):
 def wrong_pass():
     pass
 
+
+def get_size(start_path = '.'):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # skip if it is symbolic link
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+
+    return total_size
+
+def listall(list_path):
+    folder = []
+    for name in os.listdir(list_path):
+        folder.append(os.path.join(list_path,name))
+    return folder
+
+def get_name(folder):
+    folder = folder.replace("\\", "/")
+    folder = folder.split("/")[-1]
+    return folder
+
+class item:
+    def __init__(self, name, size, location):
+        self.name = name
+        self.location = location
+        size = size/1024
+        
+        if size > 1024*1024:
+            size = str(size / 1024 /1024) + ".GB"
+        elif size > 1024:
+                size = str(size / 1024) + ".MB" 
+        else:
+            size = str(size) + ".KB"
+            
+        size = size.split(".")
+        size = size[0] +"."+ (size[1])[0:2] + " " + size[2]
+        self.size = size
+
 def get_all_files():
-    print(os.walk(get_sharefolder()))
+    share_folder = get_sharefolder()
+    all_folders = listall(share_folder)
+    items = []
+    for folder in all_folders:
+        items.append(item(get_name(folder), get_size(folder),folder))
+    return items

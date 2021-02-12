@@ -1,0 +1,74 @@
+[
+    
+    ('C:/Users/Ahmed Shahriar/Desktop/share folder',
+ ['DCIM'],
+ []),
+
+ ('C:/Users/Ahmed Shahriar/Desktop/share folder\\DCIM',
+ ['Camera',
+ 'FiLMiC Pro',
+'Screenshots'],
+ []),
+
+
+ ('C:/Users/Ahmed Shahriar/Desktop/share folder\\DCIM\\Camera',
+ ['.inflight_lowres',
+ 'Raw'],
+ ['IMG_20201015_010553.jpg',
+ 'IMG_20201212_175824.jpg',
+ 'IMG_20201212_175848.jpg',
+ 'IMG_20201212_175921.jpg',
+ 'IMG_20210211_225207.jpg',
+ 'IMG_20210212_201804.jpg',
+ 'IMG_20210212_201815.jpg',
+ 'IMG_20210212_201819.jpg']),
+
+
+ ('C:/Users/Ahmed Shahriar/Desktop/share folder\\DCIM\\Camera\\.inflight_lowres',
+ [],
+ ['.nomedia']),
+
+
+ ('C:/Users/Ahmed Shahriar/Desktop/share folder\\DCIM\\Camera\\Raw',
+ [],
+ ['IMG_20201219_062921.dng',
+ 'IMG_20201219_062931.dng',
+ 'IMG_20201219_062949.dng',
+ 'IMG_20201219_063035.dng',
+ 'IMG_20201219_063142.dng',
+ 'IMG_20201219_063501.dng',
+ 'IMG_20201221_012913.dng',
+ 'IMG_20201221_012923.dng',
+ 'IMG_20201221_012952.dng',
+ 'IMG_20201221_013009.dng',
+ 'IMG_20201221_040347.dng',
+ 'IMG_20201221_040514.dng',
+ 'IMG_20210112_053153.dng',
+ 'IMG_20210112_053207.dng',
+ 'IMG_20210112_053225.dng',
+ 'IMG_20210114_175619.dng',
+ 'IMG_20210114_175621.dng',
+ 'IMG_20210114_175629.dng',
+ 'IMG_20210114_175630.dng',
+ 'IMG_20210114_175657.dng',
+ 'IMG_20210114_180004.dng',
+ 'IMG_20210210_042939.dng',
+ 'IMG_20210210_043007.dng',
+ 'IMG_20210210_043024.dng',
+ 'IMG_20210210_043102.dng',
+ 'IMG_20210210_043332.dng',
+ 'IMG_20210210_043433.dng',
+ 'IMG_20210210_043446.dng']),
+
+
+ ('C:/Users/Ahmed Shahriar/Desktop/share folder\\DCIM\\FiLMiC Pro',
+ [],
+ []),
+
+
+ ('C:/Users/Ahmed Shahriar/Desktop/share folder\\DCIM\\Screenshots',
+ [],
+ ['Screenshot_2021-02-12-01-44-44-993_com.instagram.android.jpg'])
+ 
+ 
+ ]

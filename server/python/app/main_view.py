@@ -11,7 +11,8 @@ def main():
     random_num = generate_random_num()
     ip = get_ip()
     server_status = "disconnected"
-    return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status)
+    all_files = get_all_files()
+    return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status, all_files=all_files)
 
 
 @app.route("/checkpass", methods=["POST"])

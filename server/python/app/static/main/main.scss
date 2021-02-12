@@ -2,7 +2,7 @@ $colorPrimary: #283593;
 $colorPrimaryDark: #001064;
 $colorPrimaryLight: #5f5fc4;
 $colorAccent: #ff1744;
-
+$border_color:#70707070;
 
 html, body{
     margin: 0;
@@ -11,9 +11,6 @@ html, body{
 
 body{
   font-family: Arial, Helvetica, sans-serif;
-}
-div {
-
 }
 
 .circle {
@@ -158,10 +155,49 @@ div {
 
 .hidden{
   display: none;
+
+}
+.item p, .item .img {
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+.item{
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  width: 90%;
+  height: 60px;
+  
+  border: 1px solid $border_color;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10px;
+  cursor: pointer;
+  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.295);
+  transition: 400ms all;
+}
+
+.img{
+  background-color: white;
+  height: 100%;
+}
+.icon{
+  height: 30px;
+  padding-top: 15px;
+display: block;
+margin: auto;
+}
+.size{
+  font-size: 90%;
+
+}
+.share_fold_heading p{
+  font-size: 140%;
+  margin-left: 30px;
 }
 @media (max-width: 1250px) {
     .a22{
         grid-template-columns: 1fr;
-        grid-template-rows: 3fr 1fr;
+        
     }
 }

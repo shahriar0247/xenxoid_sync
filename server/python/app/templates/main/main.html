@@ -77,7 +77,21 @@
                      </div>
                     </div>
                     <div class="a222">
+                        <div class="share_fold_heading">
+                                <p>Share Folder</p>
+                        </div>
+                        <div class="items">
+                        {% for file in all_files %}
+                        <div class="item">
+                        
+                           <div class="img"> <img src="/static/icon/folder.png" alt="folder icon" class="icon folder"></div> <p> {{ file.name }} <br> <span class="size"> {{file.size}}</span></p>
+            
+                        </div>
+                        {% endfor %}
+                    </div>
 
+                       
+                    
                     </div>
                 </div>
         </div>
