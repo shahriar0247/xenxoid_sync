@@ -116,7 +116,7 @@ div {
     padding-bottom: 4px;
     font-size: 100%;
     margin-left: 20px;
-    margin-right: 20px;
+  
 }
 
 .password_content{
@@ -125,9 +125,10 @@ div {
 }
 .hint{
     color: #646D82;
+    margin-left: 30px;
 }
 .buttons{
-    margin-left: 100px;
+    margin-left: 30px;
     margin-top: 50px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -153,6 +154,10 @@ div {
 .button:nth-child(3){
     width: auto;
     grid-area: 2 / 1 / span 1 / span 3;
+}
+
+.hidden{
+  display: none;
 }
 @media (max-width: 1250px) {
     .a22{

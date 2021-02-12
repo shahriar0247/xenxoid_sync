@@ -49,19 +49,31 @@
                         <h2>Xenxoid Synx</h2>
                  
                 
-                        <p>This computer IP (Server IP): 192.168.0.1
-                            <span class="hint">---write that in your phone</span></p>
+                
                   
                 </div>
                 <div class="a22">
                     <div class="a221">
                      <div class="password_content">
-                        Password <input type="text" class="password"> <span class="hint"> --- get password from your phone</span>
-                     </div>
+                        <form action="/checkpass" method="POST">
+                       <p>This computer IP (Server IP): 192.168.0.1
+                            <span class="hint"> --- write that in your phone</span></p> 
+                       <p> Password   
+                        <input type="text" name="custom_ip" value="{{ip}}" class="hidden">
+                        <input type="text" class="password" name="pass"><span class="hint"> --- get password from your phone</span>
+                     </p></div>
                      <div class="buttons">
-                         <div class="button">Start Server</div>
+                         <div class="button" id="start_server">Start Server</div>
                          <div class="button">Stop Server</div>
                          <div class="button">Open Sharefolder</div>
+                         <input type="submit" value="" class="hidden" id="submit">
+                         <script>
+                            var start_server = document.getElementById("start_server")
+                            var submit = document.getElementById("submit")
+                            start_server.addEventListener("click", function(){
+                                submit.click()
+                            })
+                         </script>
                      </div>
                     </div>
                     <div class="a222">

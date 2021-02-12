@@ -3,7 +3,7 @@ import math
 import time
 import struct
 import os
-from app.common_functions import pass_check, wrong_pass, get_temp, get_pass
+from app.common_functions import *
 import platform
 import pathlib
 
