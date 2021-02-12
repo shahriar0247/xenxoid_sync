@@ -121,7 +121,7 @@ class item:
                 size = str(size / 1024) + ".MB" 
         else:
             size = str(size) + ".KB"
-            
+
         size = size.split(".")
         size = size[0] +"."+ (size[1])[0:2] + " " + size[2]
         self.size = size
@@ -133,3 +133,12 @@ def get_all_files():
     for folder in all_folders:
         items.append(item(get_name(folder), get_size(folder),folder))
     return items
+
+def get_all_files_name():
+    share_folder = get_sharefolder()
+    all_folders = listall(share_folder)
+    all_folder = ""
+    for folder in all_folders:
+        all_folder = all_folder + get_name(folder)+ ", "
+    all_folder = all_folder[:-2] 
+    return all_folder

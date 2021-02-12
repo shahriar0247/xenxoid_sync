@@ -1,3 +1,4 @@
+
 from app import app
 from flask import render_template, request
 from app.common_functions import *
@@ -19,6 +20,13 @@ def load_site(server_status, error):
 @app.route("/")
 def main():
     return load_site("Disconnected", "")
+
+
+@app.route("/test")
+def test():
+    all_files_name = get_all_files_name()
+    return all_files_name
+
 
 @app.route("/checkpass", methods=["POST"])
 def check_pass():

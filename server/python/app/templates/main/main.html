@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/static/main/main.css">
+
 </head>
+
 <body>
     <div class="b">
         <div class="circle b1 red"></div>
@@ -22,91 +25,148 @@
     </div>
     <div class="a">
         <div class="a1">
-             <div class="a11">
+            <div class="a11">
                 <h3>Help</h3>
-                <p><ol>
+                <p>
+                <ol>
                     <li>Please download and open the
                         Mobile app: Xenxoid Sync</li><br>
-                        <li>
-                            Type the password shown on the
-                            mobile in your Computer app
-                            and click on 'Start Server'
-                        </li><br>
-                        <li>
-                            Write the ip address of your computer
-                            and click on 'Connect to Server'
-                        </li><br>
+                    <li>
+                        Type the password shown on the
+                        mobile in your Computer app
+                        and click on 'Start Server'
+                    </li><br>
+                    <li>
+                        Write the ip address of your computer
+                        and click on 'Connect to Server'
+                    </li><br>
                 </ol>
-                    
-                  
-                    
+
+
+
                 </p>
-             </div>
+            </div>
         </div>
         <div class="a2">
-                <div class="a21">
-                   
-                        <h2>Xenxoid Synx</h2>
-                 
-                
-                
-                  
-                </div>
-                <div class="a22">
-                    <div class="a221">
-                     <div class="password_content">
+            <div class="a21">
+
+                <h2>Xenxoid Synx</h2>
+
+
+
+
+            </div>
+            <div class="a22">
+                <div class="a221">
+                    <div class="password_content">
                         <form action="/checkpass" method="POST">
-                       <p>This computer IP (Server IP): 192.168.0.1
-                            <span class="hint"> --- write that in your phone</span></p> 
-                       <p> Password   
-                        <input type="text" name="custom_ip" value="{{ip}}" class="hidden">
-                        <input type="text" class="password" name="pass"><span class="hint"> --- get password from your phone</span>
-                     </p></div>
-                     <div class="buttons">
-                         <div class="button" id="start_server">Start Server</div>
-                         <div class="button">Stop Server</div>
-                         <div class="button" onclick="open_share_fold()">Open Sharefolder</div>
-                         <input type="submit" value="" class="hidden" id="submit">
-                         <script>
+                            <p>This computer IP (Server IP): 192.168.0.1
+                                <span class="hint"> --- write that in your phone</span>
+                            </p>
+                            <p> Password
+                                <input type="text" name="custom_ip" value="{{ip}}" class="hidden">
+                                <input type="text" class="password" name="pass"><span class="hint"> --- get password
+                                    from your phone</span>
+                            </p>
+                    </div>
+                    <div class="buttons">
+                        <div class="button" id="start_server">Start Server</div>
+                        <div class="button">Stop Server</div>
+                        <div class="button" onclick="open_share_fold()">Open Sharefolder</div>
+                        <input type="submit" value="" class="hidden" id="submit">
+                        <script>
                             var start_server = document.getElementById("start_server")
                             var submit = document.getElementById("submit")
-                            start_server.addEventListener("click", function(){
+                            start_server.addEventListener("click", function () {
                                 submit.click()
                             })
-                         </script>
-                         </form>
-                     </div>
+                        </script>
+                        </form>
                     </div>
-                    <div class="a222">
-                        <div class="open_folder_text" onclick="open_share_fold()">
-                            <p>Open Share folder</p>
-                        </div>
-                        <div class="share_fold_heading">
-                                <p>Share Folder</p>
-                        </div>
-                        <div class="items">
+                </div>
+                <div class="a222">
+                    <div class="open_folder_text" onclick="open_share_fold()">
+                        <p>Open Share folder</p>
+                    </div>
+                    <div class="share_fold_heading">
+                        <p>Share Folder</p>
+                    </div>
+                    <div class="items">
+
                         {% for file in all_files %}
                         <div class="item">
-                        
-                           <div class="img"> <img src="/static/icon/folder.png" alt="folder icon" class="icon folder"></div> <p> {{ file.name }} <br> <span class="size"> {{file.size}}</span></p>
-            
+
+                            <div class="img"> <img src="/static/icon/folder.png" alt="folder icon" class="icon folder">
+                            </div>
+                            <p> <span class="filename">{{ file.name }}</span> <br> <span class="size">
+                                    {{file.size}}</span></p>
+
                         </div>
                         {% endfor %}
                     </div>
+                    <script>
+                        function check() {
 
+                            var file;
+                            fetch("http://127.0.0.1:65023/test").then(function (response) {
+                                response.text().then(function (text) {
+
+                                    file = (text)
+
+                                    filename = document.getElementsByClassName("filename")
+                                    files = file.split(", ")
+                                    console.log(files)
+
+                                    if (files.length != filename.length){
+location.reload()
+                                    }
+                                    files.forEach(function (item, index) {
+                                        
+                                        console.log(item)
+                                        try {
+                                        if (filename[index].textContent != item) {
+                                            location.reload();
+                                        }
+                                    } catch (error) {
+                                      
+                                   location.reload()
+
+                                
+                               }
+                                    });
+                                });
+                            })
+                        }
+                        function sleep(ms) {
+                            return new Promise(resolve => setTimeout(resolve, ms));
+                        }
+                       
+                        (async () => {
+                            while (true) {
+                               await sleep(1000)
+                              
+                              
+                                check()
+                             
+                              
+                            }
+
+                        })(); 
+                    </script>
                     <form action="/open_sharefolder" method="POST">
                         <input type="submit" value="" class="hidden" id="share_fold_submit">
                     </form>
                     <script>
-                        function open_share_fold(){
+                        function open_share_fold() {
                             share_fold_submit = document.getElementById("share_fold_submit")
                             share_fold_submit.click()
                         }
                     </script>
-                    </div>
                 </div>
+            </div>
         </div>
     </div>
-   
+
 </body>
+
 </html>
