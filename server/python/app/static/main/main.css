@@ -35,6 +35,13 @@ body {
   width: 100px;
 }
 
+.b2 {
+  top: 40%;
+  right: 5%;
+  height: 400px;
+  width: 400px;
+}
+
 .a {
   display: -ms-grid;
   display: grid;
@@ -91,7 +98,6 @@ body {
 .a221 {
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
-  border: rgba(51, 51, 51, 0.5) solid 1px;
   margin: 4%;
   margin-top: 5vh;
   width: 92%;
@@ -101,16 +107,10 @@ body {
 .a222 {
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
-  border: rgba(51, 51, 51, 0.5) solid 1px;
   margin: 4%;
   margin-top: 5vh;
   width: 92%;
   height: 90%;
-}
-
-.a221, .a222 {
-  -webkit-box-shadow: -2px 2px 5px 5px rgba(0, 0, 0, 0.2);
-          box-shadow: -2px 2px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .password {
@@ -181,6 +181,12 @@ body {
   display: none;
 }
 
+.a221, .a222, .item {
+  -webkit-box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.295);
+          box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.295);
+  background-color: #ffffff4d;
+}
+
 .item p, .item .img {
   margin-top: auto;
   margin-bottom: auto;
@@ -193,19 +199,17 @@ body {
       grid-template-columns: 1fr 3fr;
   width: 90%;
   height: 60px;
+  background-color: rgba(255, 255, 255, 0.632);
   border: 1px solid #70707070;
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 10px;
   cursor: pointer;
-  -webkit-box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.295);
-          box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.295);
   -webkit-transition: 400ms all;
   transition: 400ms all;
 }
 
 .img {
-  background-color: white;
   height: 100%;
 }
 
@@ -223,6 +227,31 @@ body {
 .share_fold_heading p {
   font-size: 140%;
   margin-left: 30px;
+}
+
+.open_folder_text {
+  background-color: #ff1744;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  position: absolute;
+  -webkit-transition: all 500ms;
+  transition: all 500ms;
+}
+
+.open_folder_text:hover {
+  opacity: 0.8;
+}
+
+.open_folder_text p {
+  color: white;
+  font-size: 120%;
+  width: 100%;
+  margin-top: 90%;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 @media (max-width: 1250px) {

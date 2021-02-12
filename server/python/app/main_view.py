@@ -6,14 +6,19 @@ import threading
 import platform
 import os
 
-@app.route("/")
-def main():
+server_status = "disconnected"
+
+def load_site(server_status, error):
     random_num = generate_random_num()
     ip = get_ip()
-    server_status = "disconnected"
     all_files = get_all_files()
-    return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status, all_files=all_files)
+    return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status, all_files=all_files, error=error)
 
+    
+
+@app.route("/")
+def main():
+    return load_site("Disconnected", "")
 
 @app.route("/checkpass", methods=["POST"])
 def check_pass():
@@ -34,18 +39,18 @@ def check_pass():
 
         random_num = generate_random_num()
         ip = get_ip()
-
+        error = ""
         if info == "no":
             error = ("Wrong password. Please enter right password with same IP address")
             server_status = "disconnected"
-            return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status, error=error)
+            return load_site(server_status, error)
         elif info == "ok":
             server_status = "connected"
-            return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status)
+            return load_site(server_status, error)
         elif info == "server_error":
             server_status = "unable to be created"
             error = "Unable to start server. Please check your internet connection or click on \"Server IP Address empty\""
-            return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status, error=error)
+            return load_site(server_status, error)
         
     
     return main()
@@ -60,8 +65,7 @@ def open_sharefolder():
         os.system("xdg-open " + get_sharefolder())
     random_num = generate_random_num()
     ip = get_ip()
-    server_status = "connected"
-    return render_template("main/main.html", random_num=random_num, ip=ip, server_status=server_status)
+    return load_site(server_status, "")
 
 
 

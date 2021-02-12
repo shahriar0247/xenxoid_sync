@@ -65,7 +65,7 @@
                      <div class="buttons">
                          <div class="button" id="start_server">Start Server</div>
                          <div class="button">Stop Server</div>
-                         <div class="button">Open Sharefolder</div>
+                         <div class="button" onclick="open_share_fold()">Open Sharefolder</div>
                          <input type="submit" value="" class="hidden" id="submit">
                          <script>
                             var start_server = document.getElementById("start_server")
@@ -74,9 +74,13 @@
                                 submit.click()
                             })
                          </script>
+                         </form>
                      </div>
                     </div>
                     <div class="a222">
+                        <div class="open_folder_text" onclick="open_share_fold()">
+                            <p>Open Share folder</p>
+                        </div>
                         <div class="share_fold_heading">
                                 <p>Share Folder</p>
                         </div>
@@ -90,12 +94,19 @@
                         {% endfor %}
                     </div>
 
-                       
-                    
+                    <form action="/open_sharefolder" method="POST">
+                        <input type="submit" value="" class="hidden" id="share_fold_submit">
+                    </form>
+                    <script>
+                        function open_share_fold(){
+                            share_fold_submit = document.getElementById("share_fold_submit")
+                            share_fold_submit.click()
+                        }
+                    </script>
                     </div>
                 </div>
         </div>
     </div>
-    
+   
 </body>
 </html>
