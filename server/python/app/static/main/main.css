@@ -5,83 +5,184 @@ html, body {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #F0FAF8;
 }
 
-.all {
+.circle {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+}
+
+.b {
+  height: 0;
+  width: 0;
+}
+
+.red {
+  background-color: #ff1744;
+}
+
+.blue {
+  background-color: #283593;
+}
+
+.b1 {
+  top: 10%;
+  left: 20%;
+  height: 100px;
+  width: 100px;
+}
+
+.a {
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: 1fr 5fr;
-      grid-template-rows: 1fr 5fr;
+  -ms-grid-columns: 2fr 6fr;
+      grid-template-columns: 2fr 6fr;
   height: 100vh;
 }
 
-.head, .main,
-.quick_access, .right_main,
-.top, .all_files, .buttons {
-  margin: 10px;
-  border: 1px solid black;
-  border-radius: 10px;
+.a1 {
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border: rgba(51, 51, 51, 0.5) solid 1px;
+  height: 100vh;
+  min-width: 280px;
 }
 
-.accent_text {
-  color: #2CD889;
+.a11 {
+  margin: 8%;
+  width: 82%;
+  height: 50vh;
+  margin-top: 50vh;
 }
 
-.head {
+.a11 ol {
+  padding-left: 20px;
+}
+
+.a2 {
   display: -ms-grid;
   display: grid;
-  margin: 0;
-  -ms-grid-rows: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+  -ms-grid-rows: 1fr 3fr;
+      grid-template-rows: 1fr 3fr;
+  height: 100vh;
+}
+
+.a22 {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 5fr 2fr;
+      grid-template-columns: 5fr 2fr;
+}
+
+.a21 {
+  margin-left: 50px;
+  width: 500px;
+}
+
+.a21 h2 {
+  margin-bottom: 40px;
+  margin-top: 50px;
+  font-size: 35px;
+}
+
+.a221 {
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border: rgba(51, 51, 51, 0.5) solid 1px;
+  margin: 4%;
+  margin-top: 5vh;
+  width: 92%;
+  height: 90%;
+}
+
+.a222 {
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border: rgba(51, 51, 51, 0.5) solid 1px;
+  margin: 4%;
+  margin-top: 5vh;
+  width: 92%;
+  height: 90%;
+}
+
+.a221, .a222 {
+  -webkit-box-shadow: -2px 2px 5px 5px rgba(0, 0, 0, 0.2);
+          box-shadow: -2px 2px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.password {
+  outline: none;
   border: none;
+  border: 1px solid rgba(0, 0, 0, 0.311);
+  border-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: #ff1744 2px solid;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding: 7px;
+  padding-bottom: 4px;
+  font-size: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.headline {
-  background-color: #fff;
-  width: 100%;
+.password_content {
+  margin-left: 30px;
+  margin-top: 70px;
 }
 
-.headline h1 {
+.hint {
+  color: #646D82;
+}
+
+.buttons {
   margin-left: 100px;
-}
-
-.main {
+  margin-top: 50px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 3fr;
-      grid-template-columns: 1fr 3fr;
-  margin: 0;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  width: 200px;
 }
 
-.right_main {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: 1fr 6fr 2fr;
-      grid-template-rows: 1fr 6fr 2fr;
-}
-
-.quick_access {
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
-}
-
-.right_main {
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
-}
-
-.location {
+.button {
+  background-color: #ff1744bb;
+  color: white;
+  width: 100px;
+  padding: 28px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-radius: 3px;
   text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 120%;
+  -webkit-transition: all 400ms;
+  transition: all 400ms;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.button:hover {
+  background-color: #ff1744;
+}
+
+.button:nth-child(3) {
+  width: auto;
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: 2 / 1 / span 1 / span 3;
+}
+
+@media (max-width: 1250px) {
+  .a22 {
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: 3fr 1fr;
+        grid-template-rows: 3fr 1fr;
+  }
 }
 /*# sourceMappingURL=main.css.map */
