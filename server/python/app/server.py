@@ -7,11 +7,14 @@ from app.common_functions import *
 import platform
 import pathlib
 
+global g_sock
+
 def create_socket(ip, port):
     sock = socket.socket()
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((ip,port))
     sock.listen(5)
+    set_socket(sock)
     return sock
 
 def connect(sock):
@@ -34,6 +37,8 @@ def recv(s):
         
         output = output + s.recv(buffer).decode("utf-8")
     return output
+
+
 
 def cd(cmd, output, client):
     currentpath = output.replace("currentpath:", "")
@@ -137,8 +142,25 @@ def listall(list_path):
 
     return all_files
 
+def stop():
+    get_socket().close()
+    set_socket(None)
+   
+def set_socket(sock):
+    global g_sock
+    g_sock = sock
 
+def get_socket():
+    global g_sock
+    return g_sock
 
+def get_status():
+    global g_sock
+    if g_sock:
+        return "connected"
+    return "not connected"
+    
+    
 def start_server(ip):
     temp = get_temp()
     try:
@@ -161,13 +183,16 @@ def start_server(ip):
             
             with open(temp, "w") as f:
                 f.write("no")
+            stop()
+  
             
 
     except Exception as e:
         with open(temp, "w") as f:
             f.write("server_error")
         print(e)
-        exit(1)
+        stop()
+    stop()
 
 if __name__ == "__main__":
     start_server()

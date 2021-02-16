@@ -2,7 +2,7 @@
 from app import app
 from flask import render_template, request
 from app.common_functions import *
-from app.server import start_server, get_temp
+from app.server import get_status, start_server, get_temp, stop
 import threading
 import platform
 import os
@@ -26,7 +26,12 @@ def main():
 def test():
     all_files_name = get_all_files_name()
     return all_files_name
-
+@app.route("/stop_server")
+def stop_server():
+    stop()
+@app.route("/server_status")
+def server_status():
+    return get_status()
 
 @app.route("/checkpass", methods=["POST"])
 def check_pass():

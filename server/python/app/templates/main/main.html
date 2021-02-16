@@ -71,15 +71,32 @@
                     </div>
                     <div class="buttons">
                         <div class="button" id="start_server">Start Server</div>
-                        <div class="button">Stop Server</div>
+                        <div class="button" onclick="stop_server()">Stop Server</div>
                         <div class="button" onclick="open_share_fold()">Open Sharefolder</div>
                         <input type="submit" value="" class="hidden" id="submit">
                         <script>
                             var start_server = document.getElementById("start_server")
-                            var submit = document.getElementById("submit")
-                            start_server.addEventListener("click", function () {
-                                submit.click()
-                            })
+
+                            fetch("http://127.0.0.1:65023/server_status").then(function (response) {
+                                response.text().then(function (text) {
+                                    if (text == "connected") {
+                                        start_server.classList.add("start_server_disabled")
+                                    }
+                                    else {
+                                        var submit = document.getElementById("submit")
+                                        start_server.addEventListener("click", function () {
+                                            submit.click()
+                                        })
+                                    }
+                                }
+                                )
+                            });
+
+
+
+                            function stop_server() {
+                                fetch("http://127.0.0.1:65023/stop_server")
+                            }
                         </script>
                         </form>
                     </div>
@@ -114,41 +131,54 @@
                                     file = (text)
 
                                     filename = document.getElementsByClassName("filename")
-                                    files = file.split(", ")
-                                    console.log(files)
 
-                                    if (files.length != filename.length){
-location.reload()
+
+                                    if (file.includes(",")) {
+                                        files = file.split(", ")
+
+                                        files.pop()
+                                            
+
+                                    }
+                                    else{
+                                      files = []
+                                    }
+                                    if (files.length != filename.length) {
+
+                                        window.location.href = window.origin
                                     }
                                     files.forEach(function (item, index) {
-                                        
-                                        console.log(item)
-                                        try {
-                                        if (filename[index].textContent != item) {
-                                            location.reload();
-                                        }
-                                    } catch (error) {
-                                      
-                                   location.reload()
 
-                                
-                               }
-                                    });
+
+                                        try {
+                                            if (filename[index].textContent != item) {
+                                                window.location.href = window.origin
+                                            }
+                                        } catch (error) {
+                                            window.location.href = window.origin
+                                        }
+                                    }
+                                    )
+
+
+
+
+
                                 });
                             })
                         }
                         function sleep(ms) {
                             return new Promise(resolve => setTimeout(resolve, ms));
                         }
-                       
+
                         (async () => {
                             while (true) {
-                               await sleep(1000)
-                              
-                              
+                                await sleep(1000)
+
+
                                 check()
-                             
-                              
+
+
                             }
 
                         })(); 
@@ -157,6 +187,9 @@ location.reload()
                         <input type="submit" value="" class="hidden" id="share_fold_submit">
                     </form>
                     <script>
+                        if (window.location.href.slice(0, -1) != window.origin) {
+                            window.location = window.origin
+                        }
                         function open_share_fold() {
                             share_fold_submit = document.getElementById("share_fold_submit")
                             share_fold_submit.click()

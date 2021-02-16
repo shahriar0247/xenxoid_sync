@@ -140,5 +140,5 @@ def get_all_files_name():
     all_folder = ""
     for folder in all_folders:
         all_folder = all_folder + get_name(folder)+ ", "
-    all_folder = all_folder[:-2] 
+    all_folder = all_folder
     return all_folder

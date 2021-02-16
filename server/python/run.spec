@@ -4,9 +4,9 @@ block_cipher = None
 
 
 a = Analysis(['run.py'],
-             pathex=['A:\\Programming\\Android\\xenxoid_sync\\server\\python'],
+             pathex=['C:\\Ahmed_Shahriar\\all\\professional\\programming\\Android\\xenxoid_sync\\server\\python'],
              binaries=[],
-             datas=[('app', 'app')],
+             datas=[],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
