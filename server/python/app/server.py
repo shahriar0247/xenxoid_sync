@@ -156,9 +156,12 @@ def get_socket():
 
 def get_status():
     global g_sock
-    if g_sock:
-        return "connected"
-    return "not connected"
+    try:
+        if g_sock:
+            return "connected"
+        return "not connected"
+    except:
+        return "not connected"
     
     
 def start_server(ip):

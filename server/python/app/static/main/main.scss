@@ -157,12 +157,7 @@ body{
     grid-area: 2 / 1 / span 1 / span 3;
 }
 
-.start_server_disabled{
-  background-color: #680d1fbb;
-}
-.start_server_disabled:hover{
-  background-color: #700c20bb;
-}
+
 .hidden{
   display: none;
 
@@ -236,4 +231,7 @@ margin: auto;
         grid-template-columns: 1fr;
         
     }
+}
+.server_status{
+  margin-top: 40px;
 }
