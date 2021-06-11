@@ -1,4 +1,5 @@
 import random
+import socket
 import subprocess
 import os
 import tempfile
@@ -15,22 +16,16 @@ def set_share_folder(location):
     current_loc = pathlib.Path(__file__).parent.absolute()
     share_loc = os.path.join(current_loc, "share_loc")
     if (location == "desktop"):
-        if (platform.system()) == "Windows":
-            location = os.path.join(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop'), "share folder")
-        elif (platform.system()) == "Linux":
-            location = os.path.join(os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), "share folder")
-         
+        location = os.path.join(os.path.expanduser("~/Desktop"), "share folder")
     else:
         pass
     
+
     with open(share_loc, "w") as f:
         f.write(location)
 
-    try:
-        os.mkdir(location)
-    except:
-        pass
-    
+    if not os.path.exists(location):
+        os.mkdir(location)    
     return location
 
 
@@ -38,8 +33,12 @@ def set_share_folder(location):
 def get_sharefolder():
     current_loc = pathlib.Path(__file__).parent.absolute()
     share_loc = os.path.join(current_loc, "share_loc")
-    with open(share_loc, "r") as f:
-        loc = f.readline()
+    try:
+        with open(share_loc, "r") as f:
+            loc = f.readline()
+    except FileNotFoundError:
+        set_share_folder("desktop")
+        loc = get_sharefolder()
     return loc
 
 def shell(cmd):
@@ -50,22 +49,7 @@ def generate_random_num():
     return random.randint(1, 2000000000)
 
 def get_ip():
-    output = shell("ipconfig")
-    output = output.split("\n")
-    ip_list = []
-    for line in output:
-        if "IPv4" in line:
-            line = line.split(":")[1]
-            line = line.replace(" ","").replace("\r","")
-            ip_list.append(line)
-    for ip in ip_list:
-        if ip.startswith("192.168.0."):
-            return ip
-        elif ip.startswith("192.168.1."):
-            return ip
-        elif ip.startswith("3.1.5."):
-            return ip
-    return ip_list
+    return socket.gethostbyname(socket.gethostname())
 
 def get_temp():
     return os.path.join(tempfile.gettempdir(), "xenxoid_sync_temp")

@@ -630,6 +630,11 @@ public class File_sync extends AppCompatActivity {
                 }
                 sync_once(server);
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
 

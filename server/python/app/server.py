@@ -166,36 +166,31 @@ def get_status():
     
 def start_server(ip):
     temp = get_temp()
-    try:
-        print("Starting server")
-        sock = create_socket(ip,65022)
-        client, address = connect(sock)
-
-        password = (recv(client))[:-1]
-        send(client,get_pass())
-        if pass_check(password) == True:
-            with open(temp, "w") as f:
-                f.write("ok")
-            
-            os.chdir(get_sharefolder())
-            while True:
-                all_files = listall(".")
-            
-                download2(all_files, client)
-        else:
-            
-            with open(temp, "w") as f:
-                f.write("no")
-            stop()
   
+    print("Starting server")
+    sock = create_socket(ip,65022)
+    client, address = connect(sock)
+
+    password = (recv(client))[:-1]
+    send(client,get_pass())
+    if pass_check(password) == True:
+        with open(temp, "w") as f:
+            f.write("ok")
+        
+        os.chdir(get_sharefolder())
+        while True:
+            all_files = listall(".")
+        
+            download2(all_files, client)
+    else:
+        
+        with open(temp, "w") as f:
+            f.write("no")
+        stop()
+
             
 
-    except Exception as e:
-        with open(temp, "w") as f:
-            f.write("server_error")
-        print(e)
-        stop()
-    stop()
+    
 
 if __name__ == "__main__":
-    start_server()
+    start_server("0.0.0.0")

